@@ -194,7 +194,28 @@ git commit -m "[Feature ID] 实现的功能描述"
 
 ## 会话交接机制
 
-当 token 即将用完或会话即将结束时，必须生成**交接总结**，供下一个会话使用。
+### 重要提醒
+
+**网页/移动端用户必须在 token 用完前提前触发总结！**
+
+原因：
+- token 即将用尽时 AI 可能输出混乱
+- 避免总结写到一半 token 就用尽
+
+建议：当 token 使用超过 70% 时，立即发送触发词。
+
+### 触发词
+
+用户发送以下任一触发词，AI 必须立即生成交接总结：
+
+| 触发词 | 说明 |
+|--------|------|
+| `会话总结` | 中文触发词 |
+| `交接` | 中文触发词 |
+| `summary` | 英文触发词 |
+| `handover` | 英文触发词 |
+
+收到触发词后，AI 必须立即按以下格式生成交接总结，无需额外询问。
 
 ### 交接总结格式
 
@@ -237,22 +258,16 @@ git commit -m "[Feature ID] 实现的功能描述"
 ═══════════════════════════════════════════════════════════════
 ```
 
-### 会话结束时
+### 使用流程
 
-**本地用户**：更新 `feature_list.json` 和 `claude-progress.txt`
+**本地用户**：
+- 会话结束时：更新 `feature_list.json` 和 `claude-progress.txt`
+- 新会话开始：发送 `Read and follow the AGENT_PROTOCOL.md file for this project.`
 
-**网页端用户**：生成上述交接总结，用户复制保存
-
-### 新会话开始时
-
-**本地用户**：发送 `Read and follow the AGENT_PROTOCOL.md file for this project.`
-
-**网页端用户**：发送交接总结 + 提示词：
-```
-Read and follow the AGENT_PROTOCOL.md file for this project.
-
-[粘贴交接总结]
-```
+**网页/移动端用户**：
+- Token 使用超过 70% 时：发送 `会话总结`
+- AI 生成交接总结 → 用户复制保存
+- 新会话开始：粘贴交接总结 + `Read and follow the AGENT_PROTOCOL.md file for this project.`
 
 ---
 
