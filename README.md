@@ -1,13 +1,13 @@
 # AI Long-Running Agent Protocol
 
-A structured protocol for AI agents working across multiple context windows. Inspired by effective software engineering practices.
+A comprehensive protocol for AI agents working across multiple context windows. Inspired by Anthropic's research on effective constraints for long-running agents.
 
-## Problem
+## Problem Solved
 
 AI agents working across multiple context windows face two critical failure modes:
 
-1. **Doing too much at once** - Agents try to complete everything in one session, leaving half-implemented features
-2. **Premature completion** - Agents declare victory before proper verification
+1. **Doing too much at once** - Leaving half-implemented features and undocumented progress
+2. **Premature completion** - Declaring project complete before proper verification
 
 ## Solution
 
@@ -16,11 +16,11 @@ A dual-agent approach:
 | Agent | Role |
 |-------|------|
 | **Initialization Agent** | Sets up environment, creates feature list, makes initial commit |
-| **Coding Agent** | Works on one feature per session, leaves clean state |
+| **Coding Agent** | Works on ONE feature per session, leaves clean state |
 
 ## Quick Start
 
-Include `AGENT_PROTOCOL.md` in your project and instruct the AI:
+Include `AGENT_PROTOCOL.md` in your project:
 
 ```
 Read and follow the AGENT_PROTOCOL.md file for this project.
@@ -35,6 +35,7 @@ Complete feature inventory with pass/fail status:
   "features": [
     {
       "id": "F001",
+      "category": "functional",
       "description": "Feature description",
       "steps": ["Step 1", "Step 2"],
       "priority": "high",
@@ -54,12 +55,17 @@ Development server startup script.
 
 ```
 Session Start
-  ↓ pwd → read progress → read features → git log → init
-  ↓ Test basic functionality
-  ↓ Pick ONE feature
-  ↓ Implement & verify with E2E tests
-  ↓ Commit with descriptive message
-  ↓ Update progress file
+    ↓
+pwd → read progress → read features → git log → init.sh
+    ↓
+Test basic functionality → Fix bugs
+    ↓
+Pick ONE feature (highest priority, passes: false)
+    ↓
+Implement → E2E test verification
+    ↓
+Commit (clean state) → Update progress files
+    ↓
 Session End
 ```
 
@@ -69,14 +75,18 @@ Session End
 |------|-------------|
 | One Feature | Work on one feature per session |
 | Clean State | Code must work before session ends |
-| Test Everything | End-to-end tests required |
+| E2E Testing | End-to-end tests required, not just code review |
 | Document Progress | Update progress file and git |
-| No Deletions | Never delete features from list |
+| No Deletions | Never delete features or modify test steps |
 
-## Credit
+## Files
 
-Based on [Anthropic's research](https://www.anthropic.com/research) on long-running AI agents.
+| File | Description |
+|------|-------------|
+| `AGENT_PROTOCOL.md` | Core protocol documentation |
+| `README.md` | Project overview |
+| `LICENSE` | MIT License |
 
 ## License
 
-MIT License
+MIT License - see [LICENSE](LICENSE) file.
