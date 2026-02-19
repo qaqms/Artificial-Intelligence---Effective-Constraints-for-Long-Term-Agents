@@ -192,7 +192,7 @@ git commit -m "[Feature ID] 实现的功能描述"
 
 ---
 
-## Quick Reference Card
+## 快速参考卡
 
 ```
 ╔══════════════════════════════════════════════════════════════╗
@@ -211,52 +211,6 @@ git commit -m "[Feature ID] 实现的功能描述"
 ║  12. Update claude-progress.txt                               ║
 ║  13. Update feature_list.json (passes: true only)             ║
 ╚══════════════════════════════════════════════════════════════╝
-```
-
----
-
-## Example Session
-
-```
-[Assistant] I'll start by getting my bearings and understanding the current state.
-
-[Tool Use] <bash - pwd>
-
-[Tool Use] <read - claude-progress.txt>
-
-[Tool Use] <read - feature_list.json>
-
-[Assistant] Let me check the git log to see recent work.
-
-[Tool Use] <bash - git log --oneline -20>
-
-[Assistant] Now let me check if there's an init.sh script to restart the servers.
-
-[Tool Use] <bash - ./init.sh>
-
-[Assistant] Excellent! Now let me verify that fundamental features are still working.
-
-<Tests basic functionality>
-
-[Assistant] Based on verification, the core features are working correctly. 
-Let me review the feature list to find the next priority feature to implement.
-
-<Selects F005 from feature_list.json>
-
-<Implements feature F005>
-
-<Runs E2E tests to verify>
-
-[Assistant] Feature F005 is working. Let me commit and update progress.
-
-[Tool Use] <bash - git add . && git commit -m "F005: Add user authentication">
-
-[Tool Use] <write - claude-progress.txt>
-
-[Tool Use] <write - feature_list.json - update passes: true for F005>
-
-[Assistant] Session complete. F005 implemented and verified. 
-Next suggested feature: F006 (User profile page).
 ```
 
 ---
