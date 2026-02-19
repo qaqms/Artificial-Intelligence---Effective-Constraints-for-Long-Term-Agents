@@ -32,21 +32,21 @@ AI代理在多个上下文窗口间工作面临两个关键失败模式：
 ---
 
 ### 本地开发用户
-
+将AGENT_PROTOCOL.md拖给ai
 #### 首次会话
 ```
-Read and follow the AGENT_PROTOCOL.md file for this project.
+发请阅读并遵循本项目的AGENT_PROTOCOL.md文件
 
-请帮我开发一个购物网站，支持：
+项目如：请帮我开发一个购物网站，支持：
 - 用户登录注册
 - 商品浏览
 - 购物车
 - 订单支付
 ```
 
-#### 后续会话
+#### 后续新会话
 ```
-Read and follow the AGENT_PROTOCOL.md file for this project.
+发请阅读并遵循本项目的AGENT_PROTOCOL.md文件
 ```
 
 AI会自动读取 `feature_list.json` 和 `claude-progress.txt`，继续工作。
@@ -59,7 +59,7 @@ AI会自动读取 `feature_list.json` 和 `claude-progress.txt`，继续工作�
 
 **必须在 token 用完前提前触发生成总结！**
 
-建议：当 token 使用超过 **70%** 时，立即发送触发词。
+建议：当 token 使用超过 **70%** 时，立即发送触发词。，如果没显示使用了多少token那请您自行感觉
 
 原因：
 - Token 即将用尽时 AI 可能输出混乱
@@ -80,26 +80,6 @@ AI会自动读取 `feature_list.json` 和 `claude-progress.txt`，继续工作�
 
 ---
 
-#### 使用流程
-
-**首次会话**：
-```
-Read and follow the AGENT_PROTOCOL.md file for this project.
-
-请帮我开发一个购物网站，支持：
-- 用户登录注册
-- 商品浏览
-- 购物车
-- 订单支付
-```
-
-**Token 超过 70% 时**：
-```
-会话总结
-```
-
-AI 会自动生成：
-```
 ═══════════════════════════════════════════════════════════════
                         项目交接总结
 ═══════════════════════════════════════════════════════════════
