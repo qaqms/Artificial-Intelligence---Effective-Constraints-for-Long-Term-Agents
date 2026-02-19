@@ -26,15 +26,7 @@ AI代理在多个上下文窗口间工作面临两个关键失败模式：
 
 ### 第二步：发送提示词给AI
 
-发送以下提示词给你的AI：
-
-```
-Read and follow the AGENT_PROTOCOL.md file for this project.
-```
-
-### 示例
-
-假设你想让AI帮你开发一个聊天应用：
+**首次会话**：发送提示词 + 项目需求
 
 ```
 Read and follow the AGENT_PROTOCOL.md file for this project.
@@ -44,6 +36,40 @@ Read and follow the AGENT_PROTOCOL.md file for this project.
 - 一对一聊天
 - 群组聊天
 - 发送图片和文件
+```
+
+**后续会话**：当 token 用完开启新会话时，只需发送同样的提示词
+
+```
+Read and follow the AGENT_PROTOCOL.md file for this project.
+```
+
+AI会自动检测当前阶段：
+- 如果 `feature_list.json` 不存在 → 初始化代理模式
+- 如果 `feature_list.json` 存在 → 编码代理模式（继续工作）
+
+### 工作流程示意
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  会话 1：初始化代理                                          │
+│  提示词：Read and follow AGENT_PROTOCOL.md + 项目需求        │
+│  结果：创建 feature_list.json、进度文件、init 脚本、初始提交  │
+└─────────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────────┐
+│  会话 2：编码代理                                            │
+│  提示词：Read and follow the AGENT_PROTOCOL.md file...      │
+│  结果：实现功能 F001，更新进度文件，提交                      │
+└─────────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────────┐
+│  会话 3：编码代理                                            │
+│  提示词：Read and follow the AGENT_PROTOCOL.md file...      │
+│  结果：实现功能 F002，更新进度文件，提交                      │
+└─────────────────────────────────────────────────────────────┘
+                              ↓
+                           ... ...
 ```
 
 ### 接下来会发生什么
