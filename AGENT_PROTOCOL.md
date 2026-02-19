@@ -192,33 +192,33 @@ git commit -m "[Feature ID] 实现的功能描述"
 
 ---
 
-## 快速参考卡
+## Quick Reference Card
 
 ```
 ╔══════════════════════════════════════════════════════════════╗
 ║                    SESSION START                              ║
 ║  1. pwd                                                       ║
-║  2. 读取 claude-progress.txt                                  ║
-║  3. 读取 feature_list.json                                    ║
+║  2. Read claude-progress.txt                                  ║
+║  3. Read feature_list.json                                    ║
 ║  4. git log --oneline -20                                     ║
-║  5. 运行 init.sh/init.bat                                     ║
-║  6. 测试基础功能                                              ║
-║  7. 在新工作前修复 bug                                        ║
-║  8. 选择一个功能（最高优先级，passes: false）                 ║
-║  9. 实现功能                                                  ║
-║  10. E2E 测试验证                                             ║
-║  11. git commit（干净状态）                                   ║
-║  12. 更新 claude-progress.txt                                 ║
-║  13. 更新 feature_list.json（只改 passes: true）              ║
+║  5. Run init.sh/init.bat                                      ║
+║  6. Test basic functionality                                  ║
+║  7. Fix bugs BEFORE new work                                  ║
+║  8. Pick ONE feature (highest priority, passes: false)        ║
+║  9. Implement feature                                         ║
+║  10. E2E test verification                                    ║
+║  11. git commit (clean state)                                 ║
+║  12. Update claude-progress.txt                               ║
+║  13. Update feature_list.json (passes: true only)             ║
 ╚══════════════════════════════════════════════════════════════╝
 ```
 
 ---
 
-## 示例会话
+## Example Session
 
 ```
-[Assistant] 我首先了解当前状态。
+[Assistant] I'll start by getting my bearings and understanding the current state.
 
 [Tool Use] <bash - pwd>
 
@@ -226,37 +226,37 @@ git commit -m "[Feature ID] 实现的功能描述"
 
 [Tool Use] <read - feature_list.json>
 
-[Assistant] 让我查看 git log 了解最近的工作。
+[Assistant] Let me check the git log to see recent work.
 
 [Tool Use] <bash - git log --oneline -20>
 
-[Assistant] 现在让我检查是否有 init.sh 脚本来重启服务器。
+[Assistant] Now let me check if there's an init.sh script to restart the servers.
 
 [Tool Use] <bash - ./init.sh>
 
-[Assistant] 很好！现在让我验证基础功能是否仍然正常工作。
+[Assistant] Excellent! Now let me verify that fundamental features are still working.
 
-<测试基础功能>
+<Tests basic functionality>
 
-[Assistant] 根据验证，核心功能工作正常。
-让我查看功能列表找到下一个要实现的优先级功能。
+[Assistant] Based on verification, the core features are working correctly. 
+Let me review the feature list to find the next priority feature to implement.
 
-<从 feature_list.json 选择 F005>
+<Selects F005 from feature_list.json>
 
-<实现功能 F005>
+<Implements feature F005>
 
-<运行 E2E 测试验证>
+<Runs E2E tests to verify>
 
-[Assistant] 功能 F005 工作正常。让我提交并更新进度。
+[Assistant] Feature F005 is working. Let me commit and update progress.
 
 [Tool Use] <bash - git add . && git commit -m "F005: Add user authentication">
 
 [Tool Use] <write - claude-progress.txt>
 
-[Tool Use] <write - feature_list.json - 更新 F005 的 passes: true>
+[Tool Use] <write - feature_list.json - update passes: true for F005>
 
-[Assistant] 会话完成。F005 已实现并验证。
-下一个建议功能：F006（用户个人资料页面）。
+[Assistant] Session complete. F005 implemented and verified. 
+Next suggested feature: F006 (User profile page).
 ```
 
 ---
