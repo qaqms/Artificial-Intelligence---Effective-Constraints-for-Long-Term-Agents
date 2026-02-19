@@ -55,7 +55,18 @@ AI会自动读取 `feature_list.json` 和 `claude-progress.txt`，继续工作�
 
 ### 网页/移动端用户
 
-#### ⚠️ 重要提醒
+将AGENT_PROTOCOL.md拖给ai
+
+首次会话
+发请阅读并遵循本项目的AGENT_PROTOCOL.md文件
+
+项目如：请帮我开发一个购物网站，支持：
+- 用户登录注册
+- 商品浏览
+- 购物车
+- 订单支付
+
+#### 后续新会话
 
 **必须在 token 用完前提前触发生成总结！**
 
