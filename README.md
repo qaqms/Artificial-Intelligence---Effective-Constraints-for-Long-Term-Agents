@@ -1,40 +1,40 @@
-# AI Long-Running Agent Protocol
+# AI 长期代理协议
 
-A comprehensive protocol for AI agents working across multiple context windows. Inspired by Anthropic's research on effective constraints for long-running agents.
+一个用于AI代理在多个上下文窗口间工作的综合协议。灵感来源于Anthropic关于长期运行代理的有效约束研究。
 
-## Problem Solved
+## 解决的问题
 
-AI agents working across multiple context windows face two critical failure modes:
+AI代理在多个上下文窗口间工作面临两个关键失败模式：
 
-1. **Doing too much at once** - Leaving half-implemented features and undocumented progress
-2. **Premature completion** - Declaring project complete before proper verification
+1. **一次性做太多** - 留下半实现的功能和未记录的进度
+2. **过早宣布完成** - 在未经验证的情况下宣布项目完成
 
-## Solution
+## 解决方案
 
-A dual-agent approach:
+双代理方法：
 
-| Agent | Role |
-|-------|------|
-| **Initialization Agent** | Sets up environment, creates feature list, makes initial commit |
-| **Coding Agent** | Works on ONE feature per session, leaves clean state |
+| 代理 | 角色 |
+|------|------|
+| **初始化代理** | 搭建环境、创建功能列表、进行初始提交 |
+| **编码代理** | 每次会话只处理一个功能，留下干净状态 |
 
-## Quick Start
+## 快速入门
 
-### Step 1: Copy the Protocol File
+### 第一步：复制协议文件
 
-Copy `AGENT_PROTOCOL.md` to your project directory.
+将 `AGENT_PROTOCOL.md` 复制到你的项目目录。
 
-### Step 2: Send Prompt to AI
+### 第二步：发送提示词给AI
 
-Send this prompt to your AI:
+发送以下提示词给你的AI：
 
 ```
 Read and follow the AGENT_PROTOCOL.md file for this project.
 ```
 
-### Example
+### 示例
 
-Assume you want AI to help you build a chat application:
+假设你想让AI帮你开发一个聊天应用：
 
 ```
 Read and follow the AGENT_PROTOCOL.md file for this project.
@@ -46,48 +46,49 @@ Read and follow the AGENT_PROTOCOL.md file for this project.
 - 发送图片和文件
 ```
 
-### What Happens Next
+### 接下来会发生什么
 
-After AI reads the protocol:
+AI读取协议后：
 
-1. **First Session (Initialization Agent)**
-   - AI detects no `feature_list.json` exists
-   - Creates comprehensive feature list with all required features
-   - Creates `claude-progress.txt` for progress tracking
-   - Creates `init.sh` or `init.bat` for running the project
-   - Makes initial git commit
-   - Stops (does not start implementation)
+1. **首次会话（初始化代理）**
+   - AI检测到没有 `feature_list.json` 存在
+   - 创建包含所有所需功能的完整功能列表
+   - 创建 `claude-progress.txt` 用于进度追踪
+   - 创建 `init.sh` 或 `init.bat` 用于运行项目
+   - 进行初始git提交
+   - 停止（不开始实现）
 
-2. **Subsequent Sessions (Coding Agent)**
-   - AI reads progress file and feature list
-   - Selects ONE incomplete feature (highest priority)
-   - Implements and tests the feature
-   - Commits with clean state
-   - Updates progress files
-   - Ready for next session
+2. **后续会话（编码代理）**
+   - AI读取进度文件和功能列表
+   - 选择一个未完成的功能（最高优先级）
+   - 实现并测试该功能
+   - 以干净状态提交
+   - 更新进度文件
+   - 为下一会话做好准备
 
-### Why This Works
+### 为什么有效
 
-| Problem | Solution |
-|---------|----------|
-| AI does too much at once | Protocol enforces one feature per session |
-| AI forgets progress between sessions | Progress file provides context continuity |
-| AI declares completion too early | Feature list tracks actual completion status |
-| AI leaves broken code | Clean state required before commit |
-| AI skips testing | E2E testing mandatory before marking feature complete |
+| 问题 | 解决方案 |
+|------|----------|
+| AI一次性做太多 | 协议强制每次会话只处理一个功能 |
+| AI在会话间遗忘进度 | 进度文件提供上下文连续性 |
+| AI过早宣布完成 | 功能列表追踪实际完成状态 |
+| AI留下损坏的代码 | 提交前要求干净状态 |
+| AI跳过测试 | 标记功能完成前必须进行端到端测试 |
 
-## Key Components
+## 核心组件
 
 ### feature_list.json
-Complete feature inventory with pass/fail status:
+
+包含通过/失败状态的完整功能清单：
 ```json
 {
   "features": [
     {
       "id": "F001",
       "category": "functional",
-      "description": "Feature description",
-      "steps": ["Step 1", "Step 2"],
+      "description": "功能描述",
+      "steps": ["步骤1", "步骤2"],
       "priority": "high",
       "passes": false
     }
@@ -96,47 +97,49 @@ Complete feature inventory with pass/fail status:
 ```
 
 ### claude-progress.txt
-Session-by-session progress log for context continuity.
+
+用于上下文连续性的会话进度日志。
 
 ### init.sh / init.bat
-Development server startup script.
 
-## Workflow
+开发服务器启动脚本。
+
+## 工作流程
 
 ```
-Session Start
+会话开始
     ↓
-pwd → read progress → read features → git log → init.sh
+pwd → 读取进度 → 读取功能列表 → git log → init.sh
     ↓
-Test basic functionality → Fix bugs
+测试基础功能 → 修复bug
     ↓
-Pick ONE feature (highest priority, passes: false)
+选择一个功能（最高优先级，passes: false）
     ↓
-Implement → E2E test verification
+实现 → 端到端测试验证
     ↓
-Commit (clean state) → Update progress files
+提交（干净状态）→ 更新进度文件
     ↓
-Session End
+会话结束
 ```
 
-## Core Rules
+## 核心规则
 
-| Rule | Description |
-|------|-------------|
-| One Feature | Work on one feature per session |
-| Clean State | Code must work before session ends |
-| E2E Testing | End-to-end tests required, not just code review |
-| Document Progress | Update progress file and git |
-| No Deletions | Never delete features or modify test steps |
+| 规则 | 说明 |
+|------|------|
+| 单一功能 | 每次会话只处理一个功能 |
+| 干净状态 | 会话结束前代码必须能运行 |
+| 端到端测试 | 需要实际测试，不仅仅是代码审查 |
+| 记录进度 | 始终更新进度文件和git |
+| 禁止删除 | 永远不要删除功能或修改测试步骤 |
 
-## Files
+## 文件说明
 
-| File | Description |
-|------|-------------|
-| `AGENT_PROTOCOL.md` | Core protocol documentation |
-| `README.md` | Project overview |
-| `LICENSE` | MIT License |
+| 文件 | 说明 |
+|------|------|
+| `AGENT_PROTOCOL.md` | 核心协议文档 |
+| `README.md` | 项目概述 |
+| `LICENSE` | MIT许可证 |
 
-## License
+## 许可证
 
-MIT License - see [LICENSE](LICENSE) file.
+MIT许可证 - 详见 [LICENSE](LICENSE) 文件。
